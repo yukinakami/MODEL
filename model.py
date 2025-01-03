@@ -6,6 +6,8 @@ from transformers import BertModel, BertTokenizer, BertConfig
 from transformers import BertForSequenceClassification, AdamW, BertConfig
 from transformers import ViTConfig, ViTFeatureExtractor, ViTForImageClassification
 
+from model.cnn import CNNEncoder
+
 import numpy as np
 
 class Model(nn.Module):
