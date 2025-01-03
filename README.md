@@ -5,6 +5,8 @@
 ## model
 ### model.py 
 模型文件（等待）
+### cnn.py
+cnn模块（resnet18）
 ## data_check.ipynb 
 新闻json数据处理 => 去除种类缺失数据条目；计算新闻条数
 ## 数据情况
