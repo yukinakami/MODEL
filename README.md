@@ -7,6 +7,10 @@
 模型文件
 ### cnn.py
 cnn模块（resnet18）
+### bert.py
+bert模块
+### crossattention.py
+交叉注意力模块
 ## data_check.ipynb 
 新闻json数据处理 => 去除种类缺失数据条目；计算新闻条数
 更改：不去除缺失条目
