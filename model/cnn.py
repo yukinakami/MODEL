@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision import models
+import torch.nn.functional as F
 
 # class CNNEncoder(nn.Module):
 #     def __init__(self, pretrained=True, output_dim=256):
@@ -36,12 +37,15 @@ class CNNEncoder(nn.Module):
 
     def forward(self, x):
         # 提取卷积特征
+        x = F.interpolate(x, size=(224, 224), mode="bilinear", align_corners=False)
+        #print(x.shape)
+        # 将图片大小规定为224*224
         features = self.resnet(x)  # 输出 (batch, 512, H, W)
         return features
 
 # # 测试代码
 # if __name__ == "__main__":
-#     inputs = torch.randn(4, 3, 224, 224)  # 输入 4 张 224x224 的 RGB 图像
+#     inputs = torch.randn(4, 3, 448, 448)  # 输入 4 张 224x224 的 RGB 图像
 #     encoder = CNNEncoder(pretrained=True)  # 定义编码器
 #     encoded_features = encoder(inputs)  # 编码特征
 #     print(f"Encoded Features Shape: {encoded_features.shape}")  # 输出特征维度

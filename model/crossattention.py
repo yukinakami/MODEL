@@ -4,13 +4,7 @@ import torch.nn.functional as F
 
 class CrossAttentionFusion(nn.Module):
     def __init__(self, input_dim, hidden_dim):
-        """
-        实现两个模态的交叉注意力融合模块。
 
-        Args:
-            input_dim (int): 输入特征向量的维度。
-            hidden_dim (int): 注意力机制中间层的隐层维度。
-        """
         super(CrossAttentionFusion, self).__init__()
         self.query_text = nn.Linear(input_dim, hidden_dim)
         self.key_image = nn.Linear(input_dim, hidden_dim)
