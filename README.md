@@ -37,7 +37,7 @@ LSTM、GRU、Transformer等，将多模态模型输入时序模型进行训练�
 2.使用多种时序建模方法评估效果
 3.可视化（展示异常状态等）
 
-做到崩溃啊bro![03211B30](https://github.com/user-attachments/assets/bba2f64e-f193-4bc6-9faf-bd1454d6bc8a)
+[03211B30](https://github.com/user-attachments/assets/bba2f64e-f193-4bc6-9faf-bd1454d6bc8a)
 
 
 

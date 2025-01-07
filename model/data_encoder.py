@@ -18,3 +18,4 @@ class DataEncoder:
         lstm_out, (hidden_state,_) = self.lstm(x)
         #返回最后一个时间步的隐藏状态
         return hidden_state[-1]
+        #输出维度为(batch_size, hidden_dim)
