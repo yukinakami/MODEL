@@ -84,4 +84,4 @@ if __name__ == '__main__':
     audio_encoder = AudioEncoder(input_dim=13, hidden_dim=768, num_heads=8, num_layers=6, seq_len=100, sample_rate=16000, n_mels=23)
     audio_data = torch.randn(32, 16000)  # 假设输入batch_size=32，音频长度=16000
     audio_features = audio_encoder(audio_data)
-    print(audio_features.shape)  # 应输出 torch.Size([100, 32, 768])（假设seq_len=100）
+    print(audio_features.shape)  # 应输出 torch.Size([3232, 768])
