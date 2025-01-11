@@ -1,11 +1,11 @@
 import torch
-import torch.nn as nn #µ¼ÈëÉñ¾­ÍøÂçÄ£¿é
+import torch.nn as nn #å¯¼å…¥ç¥ç»ç½‘ç»œæ¨¡å—
 import os
-import torch.optim as optim #µ¼ÈëÓÅ»¯Æ÷
-from torch.utils.data import DataLoader, Dataset #µ¼ÈëÊı¾İ¼ÓÔØÆ÷/Êı¾İ¼¯
-from model.model import MultimodalModel #µ¼ÈëÄ£ĞÍ
+import torch.optim as optim #å¯¼å…¥ä¼˜åŒ–å™¨
+from torch.utils.data import DataLoader, Dataset #å¯¼å…¥æ•°æ®åŠ è½½å™¨/æ•°æ®é›†
+from model.model import MultimodalModel #å¯¼å…¥æ¨¡å‹
 
-#¶¨ÒåÊı¾İ¼¯
+#å®šä¹‰æ•°æ®é›†
 class MultimodalDataset(Dataset):
     def __init__(self, file_path):
         with open(file_path, 'r') as f:
@@ -13,106 +13,106 @@ class MultimodalDataset(Dataset):
         self.data = json.load(f)
 
     def __len__(self):
-        return len(self.data) #·µ»ØÊı¾İ³¤¶È
+        return len(self.data) #è¿”å›æ•°æ®é•¿åº¦
 
     def __getitem__(self, idx):
-        sample = self.data[idx] #»ñÈ¡Êı¾İ
+        sample = self.data[idx] #è·å–æ•°æ®
         return {
-            'text': torch.tensor(sample['text'], dtype=torch.float32), #ÎÄ±¾Êı¾İ
-            'image': torch.tensor(sample['image'], dtype=torch.float32), #Í¼ÏñÊı¾İ
-            'data': torch.tensor(sample['data'], dtype=torch.float32), #Ê±ĞòÊı¾İ
-            'audio': torch.tensor(sample['audio'], dtype=torch.float32), #ÒôÆµÊı¾İ
+            'text': torch.tensor(sample['text'], dtype=torch.float32), #æ–‡æœ¬æ•°æ®
+            'image': torch.tensor(sample['image'], dtype=torch.float32), #å›¾åƒæ•°æ®
+            'data': torch.tensor(sample['data'], dtype=torch.float32), #æ—¶åºæ•°æ®
+            'audio': torch.tensor(sample['audio'], dtype=torch.float32), #éŸ³é¢‘æ•°æ®
         }
 
-#ÑµÁ·º¯Êı
+#è®­ç»ƒå‡½æ•°
 def train_model(model, dataloader, optimizer, device):
-    #Ä£ĞÍ£¬Êı¾İ¼ÓÔØÆ÷£¬ËğÊ§º¯Êı£¬ÓÅ»¯Æ÷£¬Éè±¸
-    model.train() #ÑµÁ·Ä£Ê½
-    total_loss = 0.0 #³õÊ¼»¯ËğÊ§
+    #æ¨¡å‹ï¼Œæ•°æ®åŠ è½½å™¨ï¼ŒæŸå¤±å‡½æ•°ï¼Œä¼˜åŒ–å™¨ï¼Œè®¾å¤‡
+    model.train() #è®­ç»ƒæ¨¡å¼
+    total_loss = 0.0 #åˆå§‹åŒ–æŸå¤±
 
-    criterion = nn.MSELoss() #¶¨ÒåËğÊ§º¯Êı
+    criterion = nn.MSELoss() #å®šä¹‰æŸå¤±å‡½æ•°
 
     for batch in dataloader:
         text = batch['text'].to(device)
         image = batch['image'].to(device)
         data = batch['data'].to(device)
         audio = batch['audio'].to(device)
-        original = batch['original'].to(device) #Ô­Ê¼Êı¾İ
+        original = batch['original'].to(device) #åŸå§‹æ•°æ®
 
-        optimizer.zero_grad() #Ìİ¶ÈÇåÁã
+        optimizer.zero_grad() #æ¢¯åº¦æ¸…é›¶
 
-        outputs = model(text, image, data, audio) #Ç°Ïò´«²¥,µÃ³öÊä³ö
+        outputs = model(text, image, data, audio) #å‰å‘ä¼ æ’­,å¾—å‡ºè¾“å‡º
 
-        #MSEËğÊ§º¯Êı¼ÆËã
-        loss = criterion(outputs, original) #¼ÆËãËğÊ§
-        loss.backward() #·´Ïò´«²¥
-        optimizer.step() #¸üĞÂ²ÎÊı
+        #MSEæŸå¤±å‡½æ•°è®¡ç®—
+        loss = criterion(outputs, original) #è®¡ç®—æŸå¤±
+        loss.backward() #åå‘ä¼ æ’­
+        optimizer.step() #æ›´æ–°å‚æ•°
 
-        total_loss += loss.item() #ÀÛ¼ÓËğÊ§
+        total_loss += loss.item() #ç´¯åŠ æŸå¤±
 
-    return total_loss / len(dataloader) #·µ»ØÆ½¾ùËğÊ§
+    return total_loss / len(dataloader) #è¿”å›å¹³å‡æŸå¤±
 
 def valiate_model(model, dataloader, criterion, device):
-    model.eval() #ÆÀ¹ÀÄ£Ê½
-    total_loss = 0.0 #³õÊ¼»¯ËğÊ§
+    model.eval() #è¯„ä¼°æ¨¡å¼
+    total_loss = 0.0 #åˆå§‹åŒ–æŸå¤±
 
-    with torch.no_grad(): #²»¼ÆËãÌİ¶È
+    with torch.no_grad(): #ä¸è®¡ç®—æ¢¯åº¦
         for batch in dataloader:
             text = batch['text'].to(device)
             image = batch['image'].to(device)
             data = batch['data'].to(device)
             audio = batch['audio'].to(device)
-            original = batch['original'].to(device) #Ô­Ê¼Êı¾İ
+            original = batch['original'].to(device) #åŸå§‹æ•°æ®
 
-            outputs = model(text, image, data, audio) #Ç°Ïò´«²¥,µÃ³öÊä³ö
+            outputs = model(text, image, data, audio) #å‰å‘ä¼ æ’­,å¾—å‡ºè¾“å‡º
 
-            loss = criterion(outputs, original) #¼ÆËãËğÊ§
-            total_loss += loss.item() #ÀÛ¼ÓËğÊ§
+            loss = criterion(outputs, original) #è®¡ç®—æŸå¤±
+            total_loss += loss.item() #ç´¯åŠ æŸå¤±
         
-    return total_loss / len(dataloader) #·µ»ØÆ½¾ùËğÊ§
+    return total_loss / len(dataloader) #è¿”å›å¹³å‡æŸå¤±
 
 def main():
-    #ÉèÖÃÑµÁ·Éè±¸
+    #è®¾ç½®è®­ç»ƒè®¾å¤‡
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    #¼ÓÔØÊı¾İ
-    train_json = '#' #ÑµÁ·Êı¾İÂ·¾¶
-    dataset = MultimodalDataset(train_json) #Êı¾İ¼¯
+    #åŠ è½½æ•°æ®
+    train_json = '#' #è®­ç»ƒæ•°æ®è·¯å¾„
+    dataset = MultimodalDataset(train_json) #æ•°æ®é›†
 
-    #¶¯Ì¬»®·ÖÑµÁ·¼¯ºÍÑéÖ¤¼¯
-    train_size = int(0.8 * len(dataset)) #ÑµÁ·¼¯´óĞ¡ÎªÊı¾İ¼¯µÄ80%
-    val_size = len(dataset) - train_size #ÑéÖ¤¼¯´óĞ¡ÎªÊı¾İ¼¯µÄ20%
-    train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size]) #Ëæ»ú»®·ÖÊı¾İ¼¯
+    #åŠ¨æ€åˆ’åˆ†è®­ç»ƒé›†å’ŒéªŒè¯é›†
+    train_size = int(0.8 * len(dataset)) #è®­ç»ƒé›†å¤§å°ä¸ºæ•°æ®é›†çš„80%
+    val_size = len(dataset) - train_size #éªŒè¯é›†å¤§å°ä¸ºæ•°æ®é›†çš„20%
+    train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size]) #éšæœºåˆ’åˆ†æ•°æ®é›†
 
     train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True) 
-    #ÑµÁ·Êı¾İ¼ÓÔØÆ÷, batch_size=32ÒâË¼ÊÇÃ¿´ÎÑµÁ·32¸öÑù±¾, shuffle=TrueÒâË¼ÊÇÃ¿´ÎÑµÁ·Ç°´òÂÒÊı¾İ
-    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=False) #ÑéÖ¤Êı¾İ¼ÓÔØÆ÷  
+    #è®­ç»ƒæ•°æ®åŠ è½½å™¨, batch_size=32æ„æ€æ˜¯æ¯æ¬¡è®­ç»ƒ32ä¸ªæ ·æœ¬, shuffle=Trueæ„æ€æ˜¯æ¯æ¬¡è®­ç»ƒå‰æ‰“ä¹±æ•°æ®
+    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=False) #éªŒè¯æ•°æ®åŠ è½½å™¨  
 
-    #¼ÓÔØÄ£ĞÍ
-    model = MultimodalModel().to(device) #Ä£ĞÍ
+    #åŠ è½½æ¨¡å‹
+    model = MultimodalModel().to(device) #æ¨¡å‹
 
-    #¶¨ÒåÓÅ»¯Æ÷
-    optimizer = optim.Adam(model.parameters(), lr=0.001) #ÓÅ»¯Æ÷, AdamÓÅ»¯Æ÷, Ñ§Ï°ÂÊÎª0.001
+    #å®šä¹‰ä¼˜åŒ–å™¨
+    optimizer = optim.Adam(model.parameters(), lr=0.001) #ä¼˜åŒ–å™¨, Adamä¼˜åŒ–å™¨, å­¦ä¹ ç‡ä¸º0.001
     
-    #ÑµÁ·ÉèÖÃ
-    num_epochs = 10 #ÑµÁ·ÂÖÊı
-    checkpoint_path = '#' #Ä£ĞÍ±£´æÂ·¾¶
-    os.makedirs(checkpoint_path, exist_ok=True) #´´½¨Ä£ĞÍ±£´æÂ·¾¶
+    #è®­ç»ƒè®¾ç½®
+    num_epochs = 10 #è®­ç»ƒè½®æ•°
+    checkpoint_path = '#' #æ¨¡å‹ä¿å­˜è·¯å¾„
+    os.makedirs(checkpoint_path, exist_ok=True) #åˆ›å»ºæ¨¡å‹ä¿å­˜è·¯å¾„
 
-    #ÑµÁ·
+    #è®­ç»ƒ
     for epoch in range(num_epochs):
         train_loss = train_model(model, train_dataloader, optimizer, device)
         val_loss = valiate_model(model, val_dataloader, device)
 
         print(f'Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}')
-        #´òÓ¡ÑµÁ·ĞÅÏ¢£¬°üÀ¨µ±Ç°ÂÖÊı£¬×ÜÂÖÊı£¬ÑµÁ·ËğÊ§£¬ÑéÖ¤ËğÊ§£¬±£Áô4Î»Ğ¡Êı
+        #æ‰“å°è®­ç»ƒä¿¡æ¯ï¼ŒåŒ…æ‹¬å½“å‰è½®æ•°ï¼Œæ€»è½®æ•°ï¼Œè®­ç»ƒæŸå¤±ï¼ŒéªŒè¯æŸå¤±ï¼Œä¿ç•™4ä½å°æ•°
 
-        #±£´æÄ£ĞÍ
+        #ä¿å­˜æ¨¡å‹
         checkpoint_path = os.path.join(checkpoint_path, f'model_{epoch + 1}.pth')
-        #Ä£ĞÍ±£´æÂ·¾¶£¬Ä£ĞÍÃû³Æ
+        #æ¨¡å‹ä¿å­˜è·¯å¾„ï¼Œæ¨¡å‹åç§°
         torch.save(model.state_dict(), checkpoint_path)
 
-    print('Training Finished!') #ÑµÁ·½áÊø
+    print('Training Finished!') #è®­ç»ƒç»“æŸ
 
 if __name__ == '__main__':
-    main() #Ö÷º¯Êı
+    main() #ä¸»å‡½æ•°

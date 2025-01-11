@@ -18,53 +18,53 @@ import numpy as np
 class MultimodalModel(nn.Module):
     def __init__(self, text_model_name='bert-base-uncased', image_input_dim=768, time_input_dim=768, audio_input_dim=768):
         super(MultimodalModel, self).__init__()
-        # ÎÄ±¾±àÂëÆ÷
+        # æ–‡æœ¬ç¼–ç å™¨
         self.text_encoder = BertEncoder(model_name=text_model_name)
-        # Í¼Ïñ±àÂëÆ÷
+        # å›¾åƒç¼–ç å™¨
         self.image_encoder = CNNEncoder(input_dim=image_input_dim)
-        # Ê±Ğò±àÂëÆ÷
+        # æ—¶åºç¼–ç å™¨
         self.time_encoder = DataEncoder(input_dim=time_input_dim)
-        # ÒôÆµ±àÂëÆ÷
+        # éŸ³é¢‘ç¼–ç å™¨
         self.audio_encoder = AudioEncoder(input_dim=audio_input_dim)
 
     def forward(self, text, image, data, audio):
-        # »ñÈ¡ÎÄ±¾ÌØÕ÷
-        text_features = self.text_encoder.encode(text)  # Êä³ö (batch_size, 768)
-        # »ñÈ¡Í¼ÏñÌØÕ÷
+        # è·å–æ–‡æœ¬ç‰¹å¾
+        text_features = self.text_encoder.encode(text)  # è¾“å‡º (batch_size, 768)
+        # è·å–å›¾åƒç‰¹å¾
         image_features = self.image_encoder(image)  
-        #»ñÈ¡Ê±ĞòÌØÕ÷
+        #è·å–æ—¶åºç‰¹å¾
         time_features =self.time_encoder(data)
-        #»ñÈ¡ÒôÆµÌØÕ÷
+        #è·å–éŸ³é¢‘ç‰¹å¾
         audio_features = self.audio_encoder(audio)
         
         if image_features is not None:
-            #ÕâÀïĞèÒª¶ÔÍ¼Ïñ½µÎ¬£¬ÒòÎªÍ¼ÏñµÄÎ¬¶ÈÌ«¸ßÁË
+            #è¿™é‡Œéœ€è¦å¯¹å›¾åƒé™ç»´ï¼Œå› ä¸ºå›¾åƒçš„ç»´åº¦å¤ªé«˜äº†
             reducer = LSTM(input_channel=512, bert_dim=768)
             image_feacture_reduction = reducer(image_features)
         else:
             image_feacture_reduction = None
         
-        #²»Í¬Ä£Ì¬µÄÊ±Ğò½»ÈÚ
-        if text_features is not None and image_features is not None: #Í¼ÎÄ+Ê±Ğò
-            # ÈÚºÏÍ¼ÎÄÌØÕ÷
+        #ä¸åŒæ¨¡æ€çš„æ—¶åºäº¤è
+        if text_features is not None and image_features is not None: #å›¾æ–‡+æ—¶åº
+            # èåˆå›¾æ–‡ç‰¹å¾
             fusion_layer = CrossAttentionFusion(input_dim=768)
             fused_features = fusion_layer(text_features, image_feacture_reduction)
-            # ÈÚºÏÊ±ĞòÌØÕ÷
+            # èåˆæ—¶åºç‰¹å¾
             data_fusion_layer = DataCrossAttention(input_dim=768)
             data_fusion_features = data_fusion_layer(fused_features, time_features)
             return data_fusion_features
         
-        elif image_feacture_reduction is not None and text_features is None: #Í¼Ïñ+Ê±Ğò
+        elif image_feacture_reduction is not None and text_features is None: #å›¾åƒ+æ—¶åº
             data_fusion_layer = ImageDataCrossAttention(input_dim=768)
             data_fusion_features = data_fusion_layer(image_feacture_reduction, time_features)
             return data_fusion_features
         
-        elif text_features is not None and image_feacture_reduction is None: #ÎÄ±¾+Ê±Ğò
+        elif text_features is not None and image_feacture_reduction is None: #æ–‡æœ¬+æ—¶åº
             data_fusion_layer = TextDataCrossAttention(input_dim=768)
             data_fusion_features = data_fusion_layer(text_features, time_features)
             return data_fusion_features
         
-        elif audio_features is not None: #ÒôÆµ+Ê±Ğò
+        elif audio_features is not None: #éŸ³é¢‘+æ—¶åº
             data_fusion_layer = AudioDataCrossAttention(input_dim=768)
             data_fusion_features = data_fusion_layer(audio_features, time_features)
             return data_fusion_features
