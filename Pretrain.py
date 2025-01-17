@@ -57,6 +57,10 @@ def parse_args():
 
 #主函数
 def main():
+
+    data_path = 'G://模型://data//news_data.json' #数据地址
+    save_path = 'G://time_sequence_model_pretrained.pth' #模型
+
     #解析参数
     args = parse_args()
 

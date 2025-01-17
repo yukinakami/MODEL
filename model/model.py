@@ -16,18 +16,18 @@ from model.crossattention_audio_data import AudioDataCrossAttention
 import numpy as np
 
 class MultimodalModel(nn.Module):
-    def __init__(self, text_model_name='bert-base-uncased', image_input_dim=768, time_input_dim=768, audio_input_dim=768):
+    def __init__(self, text_model_name='bert-base-uncased', image_pretrained=True, time_input_dim=768, audio_input_dim=768):
         super(MultimodalModel, self).__init__()
         # 文本编码器
         self.text_encoder = BertEncoder(model_name=text_model_name)
         # 图像编码器
-        self.image_encoder = CNNEncoder(input_dim=image_input_dim)
+        self.image_encoder = CNNEncoder(pretrained=image_pretrained)
         # 时序编码器
         self.time_encoder = DataEncoder(input_dim=time_input_dim)
         # 音频编码器
-        self.audio_encoder = AudioEncoder(input_dim=audio_input_dim)
+        #self.audio_encoder = AudioEncoder(input_dim=audio_input_dim)
 
-    def forward(self, text, image, data, audio):
+    def forward(self, text, image, data): #audio
         # 获取文本特征
         text_features = self.text_encoder.encode(text)  # 输出 (batch_size, 768)
         # 获取图像特征
@@ -35,7 +35,7 @@ class MultimodalModel(nn.Module):
         #获取时序特征
         time_features =self.time_encoder(data)
         #获取音频特征
-        audio_features = self.audio_encoder(audio)
+        #audio_features = self.audio_encoder(audio)
         
         if image_features is not None:
             #这里需要对图像降维，因为图像的维度太高了
@@ -64,10 +64,10 @@ class MultimodalModel(nn.Module):
             data_fusion_features = data_fusion_layer(text_features, time_features)
             return data_fusion_features
         
-        elif audio_features is not None: #音频+时序
-            data_fusion_layer = AudioDataCrossAttention(input_dim=768)
-            data_fusion_features = data_fusion_layer(audio_features, time_features)
-            return data_fusion_features
+        # elif audio_features is not None: #音频+时序
+        #     data_fusion_layer = AudioDataCrossAttention(input_dim=768)
+        #     data_fusion_features = data_fusion_layer(audio_features, time_features)
+        #     return data_fusion_features
         
         else:
             return time_features
