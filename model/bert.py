@@ -6,19 +6,10 @@ class BertEncoder:
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.model = BertModel.from_pretrained(model_name)
 
-    def encode(self, text, max_length=512):
-        # Tokenize input text
-        inputs = self.tokenizer(
-            text,
-            return_tensors="pt",
-            max_length=max_length,
-            truncation=True,
-            padding='max_length'
-        )
-        
+    def encode(self, input_ids, attention_mask, max_length=512):
         # Pass tokens through BERT model
         with torch.no_grad():
-            outputs = self.model(**inputs)
+            outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
 
         # Return the CLS token representation
         return outputs.last_hidden_state[:, 0, :]
