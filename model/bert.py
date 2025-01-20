@@ -6,7 +6,8 @@ class BertEncoder:
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.model = BertModel.from_pretrained(model_name)
 
-    def encode(self, input_ids, attention_mask, max_length=512):
+
+    def encode(self, input_ids, attention_mask):
         # Pass tokens through BERT model
         with torch.no_grad():
             outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
@@ -14,8 +15,16 @@ class BertEncoder:
         # Return the CLS token representation
         return outputs.last_hidden_state[:, 0, :]
 
-# if __name__ == "__main__":
-#     encoder = BertEncoder()
-#     text = "This is a test sentence."
-#     representation = encoder.encode(text)
-#     print(representation)  
+if __name__ == "__main__":
+    encoder = BertEncoder()    
+    # Example text
+    text = "This is a test sentence."    
+    # Tokenize the input text
+    encoding = encoder.tokenizer(text, return_tensors='pt', padding=True, truncation=True, max_length=512)
+    # Extract input_ids and attention_mask
+    input_ids = encoding['input_ids']
+    attention_mask = encoding['attention_mask']   
+    # Get the BERT representation
+    representation = encoder.encode(input_ids, attention_mask)  
+    # Print the representation
+    print(representation.shape)

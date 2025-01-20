@@ -33,8 +33,13 @@ class MultimodalModel(nn.Module):
         
 
     def forward(self, text, image, data):
+        text_inputs = text
+        input_ids = text_inputs['input_ids']
+        attention_mask = text_inputs['attention_mask']
+        print(f"input_ids shape: {input_ids.shape}")
+        print(f"attention_mask shape: {attention_mask.shape}")
         # 获取文本特征
-        text_features = self.text_encoder.encode(text)  # 输出 (batch_size, 768)
+        text_features = self.text_encoder.encode(input_ids, attention_mask)  # 输出 (batch_size, 768)
         # 获取图像特征
         image_features = self.image_encoder(image)       
         #这里需要对图像降维，因为图像的维度太高了

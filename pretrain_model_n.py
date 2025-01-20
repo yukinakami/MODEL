@@ -35,7 +35,10 @@ for epoch in range(num_epochs):
     total_loss = 0
     for text, image, data in train_loader:
         # 将数据移动到 GPU/CPU
-        text = text.to(device)
+        text = {
+            'input_ids': text['input_ids'].squeeze(1).to(device),
+            'attention_mask': text['attention_mask'].squeeze(1).to(device)
+        }
         image = image.to(device)
         data = data.to(device)
 
@@ -61,7 +64,10 @@ for epoch in range(num_epochs):
     val_loss = 0
     with torch.no_grad():  # 在验证时不需要计算梯度
         for text, image, data in val_loader:
-            text = text.to(device)
+            text = {
+            'input_ids': text['input_ids'].squeeze(1),
+            'attention_mask': text['attention_mask'].squeeze(1)
+        }
             image = image.to(device)
             data = data.to(device)
 
