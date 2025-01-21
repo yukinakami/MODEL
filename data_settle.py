@@ -69,4 +69,4 @@ for date_folder in os.listdir(data_root):
                         })
 
 # 在数据处理结束后，保存一次JSON文件
-save_to_json(data_list, 'G://news_data.json')
+save_to_json(data_list, 'G://模型//data//news_data.json')

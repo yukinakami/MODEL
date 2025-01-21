@@ -8,8 +8,15 @@ class BertEncoder:
 
 
     def encode(self, input_ids, attention_mask):
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         # Pass tokens through BERT model
         with torch.no_grad():
+            input_ids = input_ids
+            attention_mask = attention_mask
+            self.model.to(device)
+            print(f"attention_mask device: {attention_mask.device}")
+            print(f"input_ids device: {attention_mask.device}")
+            print(f"bert device: {next(self.model.parameters()).device}")
             outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
 
         # Return the CLS token representation

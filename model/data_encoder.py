@@ -3,19 +3,27 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 
-class DataEncoder:
-    def __init__(self, input_dim, hidden_dim=768, num_layers=1):
+class DataEncoder(nn.Module):
+    def __init__(self, hidden_dim=768, num_layers=1):
         super(DataEncoder, self).__init__()
         self.lstm = nn.LSTM(
-            input_size = input_dim, #ÊäÈëÍ¨µÀÊı£¨cnnµÄÊä³öÎ¬¶È£©
-            hidden_size = hidden_dim,  #½µÎ¬ºóµÄÎ¬¶È£¨bertµÄÊä³öÎ¬¶È£©
-            num_layers = num_layers, #lstmµÄ²ãÊı = 1
-            batch_first = False, #Ê±¼ä²½ÔÚµÚ0Î¬
+            input_size = 1, #è¾“å…¥é€šé“æ•°ï¼ˆcnnçš„è¾“å‡ºç»´åº¦ï¼‰
+            hidden_size = hidden_dim,  #ç¼–ç åçš„ç»´åº¦ï¼ˆbertçš„è¾“å‡ºç»´åº¦ï¼‰
+            num_layers = num_layers, #lstmçš„å±‚æ•° = 1
+            batch_first = False, #æ—¶é—´æ­¥åœ¨ç¬¬0ç»´
             )
         
     def forward(self, x):
-        # x: (batch_size, seq_len, input_dim)
-        lstm_out, (hidden_state,_) = self.lstm(x)
-        #·µ»Ø×îºóÒ»¸öÊ±¼ä²½µÄÒş²Ø×´Ì¬
+        #print(f'x shape: {x.shape}')
+        #print(f'x: {x}')
+        # å¦‚æœ batch_first=False, é‚£ä¹ˆ x çš„å½¢çŠ¶éœ€è¦æ˜¯ (seq_len, batch_size, input_dim)
+        x = x.permute(1, 0, 2)  # è½¬ç½®ä¸º (seq_len, batch_size, input_dim)
+        print(f'Input x after permute: {x.shape}')  # æŸ¥çœ‹è½¬ç½®åçš„æ•°æ®å½¢çŠ¶
+        lstm_out, (hidden_state, _) = self.lstm(x)
         return hidden_state[-1]
-        #Êä³öÎ¬¶ÈÎª(batch_size, hidden_dim)
+
+if __name__ == "__main__":
+    x = torch.randn(1,32,1)
+    encode = DataEncoder(hidden_dim=768)
+    a = encode(x)
+    print(a.shape)

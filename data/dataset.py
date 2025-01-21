@@ -56,9 +56,12 @@ class MultimodalDataset(Dataset):
             default_image_path = 'G://模型//data//1.jpg'
             image = Image.open(default_image_path).convert('RGB')
             image_tensor = self.transform(image)  # 应用预处理操作
-        
+        #print(f'data: {data}')
         # 将时序数据转换为张量
         data_tensor = torch.tensor(data, dtype=torch.float32)
+        #print(f'data shape: {data_tensor}')
+        data_tensor = data_tensor.view(1, 1)
+        #print(f'data shape: {data_tensor.shape}')
         
         # 返回处理后的文本、图像和时序数据
         text = {

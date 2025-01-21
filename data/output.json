@@ -1,0 +1,502 @@
+[
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 865
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 892
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 634
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 978
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 916
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 710
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 851
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 816
+    },
+    {
+        "text": "生成的数据集包含了随机变化的文本内容与其他数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 699
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 750
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 875
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 850
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 967
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 674
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 986
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 984
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 798
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 785
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 596
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 922
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 861
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 943
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 873
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 848
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 667
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 623
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 566
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 792
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 654
+    },
+    {
+        "text": "生成的数据集包含了随机变化的文本内容与其他数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 972
+    },
+    {
+        "text": "生成的数据集包含了随机变化的文本内容与其他数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 640
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 937
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 622
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 706
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 880
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 598
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 527
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 930
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 927
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 586
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 546
+    },
+    {
+        "text": "生成的数据集包含了随机变化的文本内容与其他数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 990
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 755
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 819
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 719
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 885
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 804
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 920
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 935
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 941
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 927
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 850
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 801
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 584
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 858
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 799
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 673
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 607
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 579
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 832
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 803
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 968
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 727
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 652
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 568
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 528
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 977
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 531
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 650
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 728
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 951
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 570
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 848
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 877
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 519
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 716
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 663
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 802
+    },
+    {
+        "text": "生成的数据集包含了随机变化的文本内容与其他数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 749
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 706
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 549
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 586
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 927
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 558
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 750
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 991
+    },
+    {
+        "text": "生成的数据集包含了随机变化的文本内容与其他数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 964
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 642
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 702
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 944
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 749
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 631
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 501
+    },
+    {
+        "text": "这是一个示例文本，用于生成随机的 JSON 数据。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 964
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 919
+    },
+    {
+        "text": "这是一段用于生成 JSON 数据的示范文字。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 911
+    },
+    {
+        "text": "此文本内容是随便编写的，目的是用作数据集的一部分。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 885
+    },
+    {
+        "text": "随机生成的文本数据，用于展示如何创建 JSON 文件。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 706
+    },
+    {
+        "text": "本段文字是为了测试生成不同的 JSON 文件内容。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 664
+    },
+    {
+        "text": "文本内容会在不同条目中随机变化，模拟不同的场景。",
+        "image_path": "G://模型//data//1.jpg",
+        "latest_value": 652
+    }
+]

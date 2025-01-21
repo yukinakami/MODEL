@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 import json
 
 # 数据集
-dataset = MultimodalDataset("G://模型//data//cleaned_news_data2.json")
+dataset = MultimodalDataset("G://模型//data//news_data.json")
 
 # 切分数据集为训练集和验证集
 train_data, val_data = train_test_split(dataset, test_size=0.2, random_state=42)
@@ -26,14 +26,17 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
+# 打印模型信息
+print(f"模型已预备并迁移至GPU||Model initialized and moved to {device}")
 
-
-# 训练过程
+# 开始训练
 num_epochs = 10
+print("现在开始预训练喵||Starting training process...")
 for epoch in range(num_epochs):
+    print(f"Epoch {epoch+1}/{num_epochs}...")
     model.train()  # 设置模型为训练模式
     total_loss = 0
-    for text, image, data in train_loader:
+    for batch_idx, (text, image, data) in enumerate(train_loader):
         # 将数据移动到 GPU/CPU
         text = {
             'input_ids': text['input_ids'].squeeze(1).to(device),
@@ -41,6 +44,9 @@ for epoch in range(num_epochs):
         }
         image = image.to(device)
         data = data.to(device)
+        
+        print(f"Processing batch {batch_idx+1}/{len(train_loader)}...")
+        print(f"model device: {next(model.parameters()).device}")
 
         # 前向传播
         output = model(text, image, data)
@@ -57,7 +63,7 @@ for epoch in range(num_epochs):
         loss.backward()  # 计算梯度
         optimizer.step()  # 更新模型参数
 
-    print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss / len(train_loader)}")
+    print(f"训练轮次||Epoch {epoch+1}/{num_epochs} - 损失||Training Loss: {total_loss / len(train_loader):.4f}")
 
     # 验证过程（每个 epoch 结束时）
     model.eval()  # 设置模型为评估模式
@@ -65,9 +71,9 @@ for epoch in range(num_epochs):
     with torch.no_grad():  # 在验证时不需要计算梯度
         for text, image, data in val_loader:
             text = {
-            'input_ids': text['input_ids'].squeeze(1),
-            'attention_mask': text['attention_mask'].squeeze(1)
-        }
+                'input_ids': text['input_ids'].squeeze(1).to(device),
+                'attention_mask': text['attention_mask'].squeeze(1).to(device)
+            }
             image = image.to(device)
             data = data.to(device)
 
@@ -81,7 +87,10 @@ for epoch in range(num_epochs):
             loss = criterion(output, target)
             val_loss += loss.item()
 
-    print(f"Validation Loss: {val_loss / len(val_loader)}")
+    print(f"验证轮次||Epoch {epoch+1}/{num_epochs} - 损失||Validation Loss: {val_loss / len(val_loader):.4f}")
 
 # 保存模型
-torch.save(model.state_dict(), "multimodal_model.pth")
+torch.save(model.state_dict(), "G://模型//multimodal_model.pth")
+print("参数已保存至||Model saved to 'G://模型//multimodal_model.pth'")
+
+print("训练结束||Training completed.")
