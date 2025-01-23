@@ -14,9 +14,9 @@ class BertEncoder:
             input_ids = input_ids
             attention_mask = attention_mask
             self.model.to(device)
-            print(f"attention_mask device: {attention_mask.device}")
-            print(f"input_ids device: {attention_mask.device}")
-            print(f"bert device: {next(self.model.parameters()).device}")
+            # print(f"attention_mask device: {attention_mask.device}")
+            # print(f"input_ids device: {attention_mask.device}")
+            # print(f"bert device: {next(self.model.parameters()).device}")
             outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
 
         # Return the CLS token representation
@@ -34,4 +34,4 @@ if __name__ == "__main__":
     # Get the BERT representation
     representation = encoder.encode(input_ids, attention_mask)  
     # Print the representation
-    print(representation.shape)
+    #print(representation.shape)

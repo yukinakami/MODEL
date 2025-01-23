@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import json
 import pandas as pd
@@ -46,27 +44,31 @@ for date_folder in os.listdir(data_root):
                 # 获取对应日期的最新值
                 latest_value = iron_data.get(date_folder, None)
                 
-                # 处理只包含文本的情况
+                # 如果有文本内容
                 if text_contents:
+                    # 遍历所有文本内容
                     for text_content in text_contents:
-                        data_list.append({
-                            "image_path": "G://news//1.jpg",  # 无图片
-                            "text": text_content,
-                            "news_title": news_folder,
-                            "news_date": date_folder,
-                            "latest_value": latest_value  # 添加最新值字段
-                        })
-
-                # 处理只包含图片的情况
-                if image_paths:
-                    for image_path in image_paths:
-                        data_list.append({
-                            "image_path": image_path,
-                            "text": "无新闻内容",  # 无文本
-                            "news_title": news_folder,
-                            "news_date": date_folder,
-                            "latest_value": latest_value  # 添加最新值字段
-                        })
+                        # 如果有图片，生成每个文本和每个图片的组合数据
+                        if image_paths:
+                            for image_path in image_paths:
+                                data_list.append({
+                                    "image_path": image_path,  # 配对当前图片
+                                    "text": text_content,      # 配对当前文本
+                                    "news_title": news_folder,
+                                    "news_date": date_folder,
+                                    "latest_value": latest_value  # 添加最新值字段
+                                })
+                        # 如果没有图片，则生成包含文本但没有图片的条目
+                        else:
+                            data_list.append({
+                                "image_path": "G://news//1.jpg",  # 默认图片（无图片的情况）
+                                "text": text_content,
+                                "news_title": news_folder,
+                                "news_date": date_folder,
+                                "latest_value": latest_value  # 添加最新值字段
+                            })
 
 # 在数据处理结束后，保存一次JSON文件
 save_to_json(data_list, 'G://模型//data//news_data.json')
+
+print("处理完成，JSON文件已保存")

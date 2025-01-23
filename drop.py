@@ -13,9 +13,9 @@ def clean_data(json_file):
     return cleaned_data
 
 # 使用示例
-json_file = "G://模型//data//news_data.json"
+json_file = "G://模型//data//clean.json"
 cleaned_data = clean_data(json_file)
 
 # 保存清理后的数据到新的 JSON 文件
-with open("G://模型//data//news_data.json", 'w', encoding='utf-8') as f:
+with open("G://模型//data//clean.json", 'w', encoding='utf-8') as f:
     json.dump(cleaned_data, f, ensure_ascii=False, indent=4)

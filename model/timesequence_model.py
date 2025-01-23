@@ -3,7 +3,7 @@ import torch.nn as nn
 import os
 
 class TimeSequenceModel(nn.Module):
-    def __init__(self, input_dim, hidden_dim, num_layers, seq_len, dropout=0.1):
+    def __init__(self, input_dim, hidden_dim, num_layers, seq_len, dropout):
         super(TimeSequenceModel, self).__init__()
 
         self.hidden_dim = hidden_dim # 隐藏层维度
@@ -17,7 +17,7 @@ class TimeSequenceModel(nn.Module):
         self.fc = nn.Linear(hidden_dim, 1) #假设输出是一个标量（例如异常检测的概率）
 
     def forward(self, x):
-        print(f'x: {x.shape}')
+        #print(f'x: {x.shape}')
         # 输入形状为 (batch_size*seq_len, input_dim)
         # 将输入变换为 (batch_size, seq_len, input_dim)
         #batch_size = x.size(0) // self.seq_len #计算batch_size

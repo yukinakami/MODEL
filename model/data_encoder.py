@@ -18,7 +18,7 @@ class DataEncoder(nn.Module):
         #print(f'x: {x}')
         # 如果 batch_first=False, 那么 x 的形状需要是 (seq_len, batch_size, input_dim)
         x = x.permute(1, 0, 2)  # 转置为 (seq_len, batch_size, input_dim)
-        print(f'Input x after permute: {x.shape}')  # 查看转置后的数据形状
+        #print(f'Input x after permute: {x.shape}')  # 查看转置后的数据形状
         lstm_out, (hidden_state, _) = self.lstm(x)
         return hidden_state[-1]
 
@@ -26,4 +26,4 @@ if __name__ == "__main__":
     x = torch.randn(1,32,1)
     encode = DataEncoder(hidden_dim=768)
     a = encode(x)
-    print(a.shape)
+    #print(a.shape)

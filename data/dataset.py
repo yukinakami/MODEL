@@ -12,7 +12,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class MultimodalDataset(Dataset):
     def __init__(self, json_file, max_length=512):
-        with open(json_file, 'r', encoding='utf-') as f:
+        with open(json_file, 'r', encoding='utf-8') as f:
             self.data = json.load(f)
         
         # 初始化 BERT Tokenizer
@@ -26,6 +26,15 @@ class MultimodalDataset(Dataset):
         ])
 
         self.max_length = max_length
+
+        # 计算全局的均值和标准差（如果是时序数据的目标）
+        self.mean = None
+        self.std = None
+        if self.data:
+            all_values = [entry['latest_value'] for entry in self.data]
+            all_values = np.array(all_values)
+            self.mean = np.mean(all_values)
+            self.std = np.std(all_values)
 
     def __len__(self):
         return len(self.data)
@@ -46,29 +55,29 @@ class MultimodalDataset(Dataset):
             return_tensors='pt')
         
         # 处理图像：加载图像并应用预处理
-        try:
-            image = Image.open(image_path).convert('RGB')  # 打开图片并转换为 RGB 模式
-            image_tensor = self.transform(image)  # 应用预处理操作
-        except OSError as e:
-            # 如果遇到损坏的图像，打印路径并加载默认图像
-            print(f"Skipping corrupted image: {image_path}")
-            # 直接使用写死的默认图像路径
-            default_image_path = 'G://模型//data//1.jpg'
-            image = Image.open(default_image_path).convert('RGB')
-            image_tensor = self.transform(image)  # 应用预处理操作
-        #print(f'data: {data}')
+        image = Image.open(image_path).convert('RGB')  # 打开图片并转换为 RGB 模式
+        image_tensor = self.transform(image)  # 应用预处理操作
+
         # 将时序数据转换为张量
         data_tensor = torch.tensor(data, dtype=torch.float32)
-        #print(f'data shape: {data_tensor}')
+
+        # 标准化目标标签
+        if self.mean is not None and self.std is not None:
+            normalized_target = (data_tensor - self.mean) / self.std
+        else:
+            normalized_target = data_tensor  # 如果没有全局标准化参数，则不标准化
+
+        # 将时序数据和目标标签的形状保持一致
         data_tensor = data_tensor.view(1, 1)
-        #print(f'data shape: {data_tensor.shape}')
+        normalized_target = normalized_target.view(1, 1)
         
         # 返回处理后的文本、图像和时序数据
         text = {
-            'input_ids': text_inputs['input_ids'],
-            'attention_mask': text_inputs['attention_mask']
+            'input_ids': text_inputs['input_ids'].squeeze(0),  # 通过 squeeze 去除批次维度
+            'attention_mask': text_inputs['attention_mask'].squeeze(0)
         }
         image = image_tensor
         data = data_tensor
+        target = normalized_target
         
-        return text, image, data
+        return text, image, data, target

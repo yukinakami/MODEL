@@ -35,4 +35,4 @@ if __name__ == "__main__":
     inputs = torch.randn(4, 512, 7, 7)  # 输入 4 张 224x224 的 RGB 图像
     encoder = LSTM(input_channel=512, bert_dim=768)  # 定义编码器
     encoded_features = encoder(inputs)  # 编码特征
-    print(f"Encoded Features Shape: {encoded_features.shape}")  # 输出特征维度
+    #print(f"Encoded Features Shape: {encoded_features.shape}")  # 输出特征维度

@@ -57,7 +57,7 @@ class CrossAttentionFusion(nn.Module):
 
         # 融合特征
         fused_features = torch.cat([attended_image.mean(dim=1), attended_text.mean(dim=1)], dim=-1)  # (batch_size, 2 * hidden_dim)
-        print(fused_features.shape)  # 打印调试信息，查看融合后的特征形状
+        #print(fused_features.shape)  # 打印调试信息，查看融合后的特征形状
 
         output_features = self.output_fc(fused_features)  # (batch_size, input_dim)
         return output_features
@@ -71,4 +71,4 @@ if __name__ == "__main__":
     # 定义模型，设置最大序列长度为 10
     encode = CrossAttentionFusion(input_dim=768, hidden_dim=256, max_seq_len=10)
     features = encode(input_text, input_image)
-    print(f'shape: {features.shape}')
+    #print(f'shape: {features.shape}')
