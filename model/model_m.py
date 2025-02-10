@@ -4,12 +4,13 @@ import os
 
 from model.cnn import CNNEncoder
 from model.bert import BertEncoder
-from model.crossattention import CrossAttentionFusion
+#from model.crossattention import CrossAttentionFusion
 from model.Dimension_reuction import LSTM
 from model.data_encoder import DataEncoder
 #from model.data_crossattention import DataCrossAttentionFusion
 from model.timesequence_model import TimeSequenceModel
 from model.crossattention_image_data import ModalFusionModel
+from model.Transformer_model import TransformerTimeSeries
 
 import numpy as np
 
@@ -31,7 +32,8 @@ class MultimodalModel(nn.Module):
         #模态融合
         self.crossattention = ModalFusionModel(text_dim=768, image_dim=768, data_dim=768, hidden_dim=768, attention_heads=8, num_attention_layers=3)
         # 时序模型
-        self.timesequence = TimeSequenceModel(input_dim=768, hidden_dim=hidden_dim, num_layers=4, seq_len=seq_len, dropout=dropout)
+        #self.timesequence = TimeSequenceModel(input_dim=768, hidden_dim=hidden_dim, num_layers=4, seq_len=seq_len, dropout=dropout)
+        self.timesequence = TransformerTimeSeries(input_dim=768, num_heads=8, num_layers=6, dim_feedforward=2048, dropout=0.1, output_dim=1)
         
     def forward(self, text, image, data):
         input_ids = text['input_ids']

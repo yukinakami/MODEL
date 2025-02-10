@@ -16,12 +16,13 @@ def print_to_log(message):
     logging.info(message)  # 同时将信息写入日志文件
 
 # 数据集
-dataset = MultimodalDataset("G://模型//data//clean2.json")
+dataset = MultimodalDataset("G://pretrain//selected_data.json")
+#dataset = MultimodalDataset("G://模型//data//output.json")
 
 # 切分数据集为训练集和验证集
 train_data, val_data = train_test_split(dataset, test_size=0.2, random_state=42)
-train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
-val_loader = DataLoader(val_data, batch_size=32, shuffle=False)
+train_loader = DataLoader(train_data, batch_size=8, shuffle=True)
+val_loader = DataLoader(val_data, batch_size=8, shuffle=False)
 
 # 初始化模型
 model = MultimodalModel(text_model_name='bert-base-uncased', image_pretrained=True, hidden_dim=256)
@@ -42,7 +43,7 @@ mae_loss = nn.L1Loss()
 huber_loss = nn.SmoothL1Loss()
 
 # 开始训练
-num_epochs = 10
+num_epochs = 20
 print_to_log("现在开始预训练||Starting training process...")
 
 for epoch in range(num_epochs):
@@ -80,7 +81,7 @@ for epoch in range(num_epochs):
         # 打印部分结果
         #print_to_log(f"Predictions: {output}")
         #print_to_log(f"Labels: {target}")
-        print_to_log(f"MSE Loss: {mse.item()}, MAE Loss: {mae.item()}, Huber Loss: {huber.item()}")
+        #print(f"MSE Loss: {mse.item()}, MAE Loss: {mae.item()}, Huber Loss: {huber.item()}")
 
     print_to_log(f"训练轮次||Epoch {epoch+1}/{num_epochs} - 损失||Training Loss: {total_loss.item():.4f}")
 
@@ -111,7 +112,7 @@ for epoch in range(num_epochs):
     print_to_log(f"验证轮次||Epoch {epoch+1}/{num_epochs} - 损失||Validation Loss: {val_loss / len(val_loader):.4f}")
 
 # 保存模型
-torch.save(model.state_dict(), "G://模型//multimodal_model.pth")
-print_to_log("参数已保存至||Model saved to 'G://模型//multimodal_model.pth'")
+torch.save(model.state_dict(), "G://multimodal_model.pth")
+print_to_log("参数已保存至||Model saved to 'G://multimodal_model.pth'")
 
 print_to_log("训练结束||Training completed.")
