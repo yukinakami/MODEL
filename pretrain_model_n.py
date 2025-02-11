@@ -21,14 +21,14 @@ dataset = MultimodalDataset("G://pretrain//selected_data.json")
 
 # 切分数据集为训练集和验证集
 train_data, val_data = train_test_split(dataset, test_size=0.2, random_state=42)
-train_loader = DataLoader(train_data, batch_size=8, shuffle=True)
-val_loader = DataLoader(val_data, batch_size=8, shuffle=False)
+train_loader = DataLoader(train_data, batch_size=16, shuffle=True)
+val_loader = DataLoader(val_data, batch_size=16, shuffle=False)
 
 # 初始化模型
 model = MultimodalModel(text_model_name='bert-base-uncased', image_pretrained=True, hidden_dim=256)
 
 # 选择优化器
-optimizer = optim.Adam(model.parameters(), lr=1e-3)
+optimizer = optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-4) #weight_decay是正则化项,防止过拟合
 
 # 设备设置（如果有GPU可用，使用GPU）
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -76,6 +76,7 @@ for epoch in range(num_epochs):
         # 反向传播和优化
         optimizer.zero_grad()  # 清除之前的梯度
         total_loss.backward()  # 计算梯度
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # 梯度裁剪
         optimizer.step()  # 更新模型参数
 
         # 打印部分结果
