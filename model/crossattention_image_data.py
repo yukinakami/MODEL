@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# 简单的交叉注意力层定义
+
 class CrossAttentionLayer(nn.Module):
     def __init__(self, input_dim, attention_heads=8):
         super(CrossAttentionLayer, self).__init__()
@@ -24,7 +24,7 @@ class ModalFusionModel(nn.Module):
         self.image_fc = nn.Linear(image_dim, hidden_dim)
         self.data_fc = nn.Linear(data_dim, hidden_dim)
         
-        # 交叉注意力层（多层交叉注意力）
+        # 自注意力层（多层交叉注意力）
         self.cross_attention_layers = nn.ModuleList([
             CrossAttentionLayer(hidden_dim, attention_heads) for _ in range(num_attention_layers)
         ])
@@ -41,7 +41,7 @@ class ModalFusionModel(nn.Module):
         # 将它们堆叠为batch中的多个模态特征
         combined_feats = torch.stack([text_feat, image_feat, data_feat], dim=0)  # (3, batch_size, hidden_dim)
         
-        # 多层交叉注意力机制融合模态
+        # 多层注意力机制融合模态
         for cross_attention in self.cross_attention_layers:
             fusion_output = cross_attention(combined_feats, combined_feats, combined_feats)
         

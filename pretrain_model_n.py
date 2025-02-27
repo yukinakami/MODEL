@@ -3,14 +3,14 @@ import torch.optim as optim
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from data.dataset import MultimodalDataset  # 假设 Dataset 存储在 dataset.py 文件中
-from model.model_m import MultimodalModel  # 假设模型存储在 model.py 文件中
+from model.model_Transformer import MultimodalModel  # 假设模型存储在 model.py 文件中
 from sklearn.model_selection import train_test_split
 import json
 import logging
 from tqdm import tqdm  # 导入 tqdm 库
 
 # 配置日志
-logging.basicConfig(filename='G://training_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='G://training_log_1.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
 def print_to_log(message):
     print(message)  # 继续打印到控制台
     logging.info(message)  # 同时将信息写入日志文件

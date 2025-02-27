@@ -8,55 +8,46 @@ from model.bert import BertEncoder
 from model.Dimension_reuction import LSTM
 from model.data_encoder import DataEncoder
 #from model.data_crossattention import DataCrossAttentionFusion
-from model.timesequence_model import TimeSequenceModel
+from model.GRU import TimeSequenceModell
 from model.crossattention_image_data import ModalFusionModel
-from model.Transformer_model import TransformerTimeSeries
 
 import numpy as np
 
-class MultimodalModel(nn.Module):
+class MultimodalModel_GRU(nn.Module):
     def __init__(self, text_model_name='bert-base-uncased', image_pretrained=True, seq_len=10, hidden_dim=128, num_layers=2, dropout=0.1):
-        super(MultimodalModel, self).__init__()
-        # æ–‡æœ¬ç¼–ç å™¨
+        super(MultimodalModel_GRU, self).__init__()
+        # ÎÄ±¾±àÂëÆ÷
         self.text_encoder = BertEncoder(model_name=text_model_name)
-        # å›¾åƒç¼–ç å™¨
+        # Í¼Ïñ±àÂëÆ÷
         self.image_encoder = CNNEncoder(pretrained=image_pretrained)
-        # æ•°æ®ç¼–ç å™¨
+        # Êı¾İ±àÂëÆ÷
         self.data_encoder = DataEncoder(hidden_dim=768)
-        # å›¾åƒé™ç»´
+        # Í¼Ïñ½µÎ¬
         self.reducer = LSTM(input_channel=512, bert_dim=768)
-        # å›¾æ–‡äº¤è
+        # Í¼ÎÄ½»ÈÚ
         #self.crossattention = CrossAttentionFusion(input_dim=768, hidden_dim=256)
-        #æ—¶åºäº¤è
+        #Ê±Ğò½»ÈÚ
         #self.data_crossattention = DataCrossAttentionFusion(input_dim=768, hidden_dim=256)
-        #æ¨¡æ€èåˆ
+        #Ä£Ì¬ÈÚºÏ
         self.crossattention = ModalFusionModel(text_dim=768, image_dim=768, data_dim=768, hidden_dim=768, attention_heads=8, num_attention_layers=3)
-        # æ—¶åºæ¨¡å‹
-        #self.timesequence = TimeSequenceModel(input_dim=768, hidden_dim=hidden_dim, num_layers=4, seq_len=seq_len, dropout=dropout)
-        self.timesequence = TransformerTimeSeries(input_dim=768, num_heads=8, num_layers=6, dim_feedforward=2048, dropout=0.1, output_dim=1)
+
+        # Ê±ĞòÄ£ĞÍ
+        self.timesequence = TimeSequenceModell(input_dim=768, hidden_dim=hidden_dim, num_layers=4, seq_len=seq_len, dropout=dropout)
         
     def forward(self, text, image, data):
         input_ids = text['input_ids']
         attention_mask = text['attention_mask']
-        # print(f"input_ids shape: {input_ids.shape}")
-        # print(f"attention_mask shape: {attention_mask.shape}")
-        # print(f"attention_mask device: {attention_mask.device}")
-        # print(f"input_ids device: {attention_mask.device}")
-        #print(f"data: {data}")
-        # è·å–æ–‡æœ¬ç‰¹å¾
-        text_features = self.text_encoder.encode(input_ids, attention_mask)  # è¾“å‡º (batch_size, 768)
-        # è·å–å›¾åƒç‰¹å¾
+        # »ñÈ¡ÎÄ±¾ÌØÕ÷
+        text_features = self.text_encoder.encode(input_ids, attention_mask)  # Êä³ö (batch_size, 768)
+        # »ñÈ¡Í¼ÏñÌØÕ÷
         image_features = self.image_encoder(image)       
-        #è¿™é‡Œéœ€è¦å¯¹å›¾åƒé™ç»´ï¼Œå› ä¸ºå›¾åƒçš„ç»´åº¦å¤ªé«˜äº†
+        #ÕâÀïĞèÒª¶ÔÍ¼Ïñ½µÎ¬£¬ÒòÎªÍ¼ÏñµÄÎ¬¶ÈÌ«¸ßÁË
         image_feacture_reduction = self.reducer(image_features)
-        # æ•°æ®ç‰¹å¾
+        # Êı¾İÌØÕ÷
         data_features = self.data_encoder(data)
-        # èåˆç‰¹å¾
+        # ÈÚºÏÌØÕ÷
         fused_features = self.crossattention(text_features, image_feacture_reduction, data_features)
-        #print(fused_features.shape)
-        # æ—¶åºèåˆ
-        #data_image_text_features = self.data_crossattention(fused_features, data_features)
-        # æ—¶åºæ¨¡å‹
+        # Ê±ĞòÄ£ĞÍ
         output = self.timesequence(fused_features)
 
         return output

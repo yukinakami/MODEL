@@ -10,7 +10,6 @@ from model.data_encoder import DataEncoder
 from model.data_crossattention import DataCrossAttention
 from model.audio_feacture import AudioEncoder
 from model.crossattention_image_data import ImageDataCrossAttention
-from model.crossattention_text_data import TextDataCrossAttention
 from model.crossattention_audio_data import AudioDataCrossAttention
 
 import numpy as np
