@@ -3,9 +3,9 @@ import torch.optim as optim
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from data.dataset import MultimodalDataset
-from model.model_Transformer import MultimodalModel
-#from model.model_LSTM import MultimodalModel_LSTM
-#from model.model_GRU import MultimodalModel_GRU
+#from model.model_Transformer import MultimodalModel
+from model.model_LSTM import MultimodalModel_LSTM
+#from model.model_RNN import MultimodalModel_RNN
 from sklearn.model_selection import train_test_split
 import json
 import logging
@@ -13,7 +13,7 @@ from tqdm import tqdm
 import torch.nn.functional as F
 
 # 配置日志
-logging.basicConfig(filename='G://training_log_TRAN.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='G://training_log_RNN.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
 def print_to_log(message):
     print(message)  # 继续打印到控制台
     logging.info(message)  # 同时将信息写入日志文件
@@ -28,7 +28,7 @@ train_loader = DataLoader(train_data, batch_size=16, shuffle=True)
 val_loader = DataLoader(val_data, batch_size=16, shuffle=False)
 
 # 初始化模型
-model = MultimodalModel(text_model_name='bert-base-uncased', image_pretrained=True, hidden_dim=256)
+model = MultimodalModel_LSTM(text_model_name='bert-base-uncased', image_pretrained=True, hidden_dim=256)
 
 # 选择优化器
 optimizer = optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-4)
@@ -87,7 +87,7 @@ for epoch in range(num_epochs):
         output = model(text, image, data)
 
         # 输出形状调整，去掉额外的维度 [batch_size, 1, 1] -> [batch_size, 1]
-        output = output.squeeze(2)
+        #output = output.squeeze(2)
 
         # 计算损失
         mse = mse_loss(output, target)
@@ -150,7 +150,7 @@ for epoch in range(num_epochs):
             output = model(text, image, data)
 
             # 输出形状调整
-            output = output.squeeze(2)
+            #output = output.squeeze(2)
 
             # 计算损失
             mse = mse_loss(output, target)
@@ -181,7 +181,7 @@ for epoch in range(num_epochs):
                   f"R²: {avg_val_r2:.4f} - MAPE: {avg_val_mape:.4f}")
 
 # 保存模型
-torch.save(model.state_dict(), "G://multimodal_model_TRAN.pth")
-print_to_log("参数已保存至||Model saved to 'G://multimodal_model_TRAN.pth'")
+torch.save(model.state_dict(), "G://multimodal_model_RNN.pth")
+print_to_log("参数已保存至||Model saved to 'G://multimodal_model_RNN.pth'")
 
 print_to_log("训练结束||Training completed.")
